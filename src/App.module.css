@@ -1,11 +1,7 @@
 .app {
   width: 960px;
   max-width: 960px;
-  margin: 0 auto;
-  
 }
-
 .app-header {
-  color: @red;
-  font-size: 20px;
+  color: #f44;
 }

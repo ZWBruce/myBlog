@@ -1,14 +1,26 @@
 import React from 'react';
 import MarkDown from 'react-markdown'
-import '@/App.less';
+import Main from './components/main/Main'
+import Head from './components/Head/Head'
+import Catagory from './components/category/index'
+import Tags from './components/tags/index'
+import { HashRouter, Route, Redirect } from 'react-router-dom'
+import './App.less';
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        this is my react blog
-      </header>
-      <MarkDown source={'# This is a header\n\n**And this is a paragraph**'} />
-    </div>
+    <HashRouter>
+      <div className='app'>
+        <Head>
+          zw
+        </Head>
+        <MarkDown source={'# This is a header\n\n**And this is a paragraph**'} />
+        <Route path='/index' component={Main} />
+        <Route path='/catagory' component={Catagory} />
+        <Route path='/tags' component={Tags} />
+        <Redirect exact from='/' to='/index' />
+      </div>
+    </HashRouter>
   );
 }
 

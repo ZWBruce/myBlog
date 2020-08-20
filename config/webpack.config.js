@@ -123,6 +123,10 @@ module.exports = function (webpackEnv) {
           loader: require.resolve(preProcessor),
           options: {
             sourceMap: true,
+            lessOptions: {
+              javascriptEnabled: true
+            }
+
           },
         }
       );
@@ -373,7 +377,7 @@ module.exports = function (webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
-
+                presets: ['@babel/preset-env'],
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -386,6 +390,10 @@ module.exports = function (webpackEnv) {
                       },
                     },
                   ],
+                  ["import", {
+                    "libraryName": "antd",
+                    "style": true,   // or 'css'
+                  }]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -491,14 +499,23 @@ module.exports = function (webpackEnv) {
             // },
             {
               test: lessRegex,
-              exclude: sassModuleRegex,
-              use: getStyleLoaders(
-                {
-                  importLoaders: 3,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
-                },
-                'less-loader'
-              ),
+              exclude: lessModuleRegex,
+              use:
+                [
+                  ...getStyleLoaders(
+                    {
+                      importLoaders: 3,
+                      sourceMap: isEnvProduction && shouldUseSourceMap
+                    },
+                    'less-loader'
+                  ),
+                  {
+                    loader: 'style-resources-loader',
+                    options: {
+                      patterns: path.resolve(__dirname, '../src/common/style/common.less')
+                    }
+                  }
+                ],
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
               // Remove this when webpack adds a warning or an error for this.
