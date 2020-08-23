@@ -5,8 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { context } from './context'
 
+const host = process.env.NODE_ENV === 'development' ? 'http://localhost:8090' : 'http://39.96.31.138'
 const globalData = {
-  test: 'abc'
+  host
 }
 
 ReactDOM.render(

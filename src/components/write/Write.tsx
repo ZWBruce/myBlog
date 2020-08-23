@@ -28,9 +28,7 @@ function reducer(state: any, action: Act) {
 export default function () {
 
   const [state, dispatch] = useReducer(reducer, initalSate)
-  // const data = useContext(context)
-
-
+  const data = useContext(context)
   function change(e: any, type = 'changeTitle') {
     console.log(e.target.value)
     dispatch({
@@ -44,7 +42,7 @@ export default function () {
 
       return
     }
-    const url = 'http://localhost:8090/articles/send'
+    const url = `${data.host}/articles/send`
     const fd = new FormData()
     fd.append('title', state.title)
     fd.append('content', state.content)

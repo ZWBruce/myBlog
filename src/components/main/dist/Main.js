@@ -3,6 +3,7 @@ exports.__esModule = true;
 var react_1 = require("react");
 var antd_1 = require("antd");
 var axios_1 = require("axios");
+var context_1 = require("../../context");
 require("./Main.less");
 var initalSate = { count: 0 };
 function reducer(state, action) {
@@ -25,16 +26,17 @@ function default_1() {
         return '三只松鼠';
     }, []);
     console.log({ val: val, cb: cb });
+    var data = react_1.useContext(context_1.context);
     var imgRef = react_1.useRef(null);
     var _a = react_1.useReducer(reducer, initalSate), state = _a[0], dispatch1 = _a[1];
     react_1.useEffect(function () {
         axios_1["default"]({
-            url: 'http://localhost:8090/articles/list',
+            url: data.host + "/articles/list",
             method: 'get'
         }).then(function (res) {
             console.log(res);
         });
-    }, []);
+    }, [data.host]);
     function upload() {
         var imgDom = imgRef.current;
         var images = imgDom.files;
@@ -42,7 +44,7 @@ function default_1() {
         fd.append('image', images[0]);
         fd.append('msg', 'abcd');
         axios_1["default"]({
-            url: 'http://localhost:8090/upload',
+            url: data.host + "/upload",
             method: 'post',
             data: fd
         }).then(function (res) {

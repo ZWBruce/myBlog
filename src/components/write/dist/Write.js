@@ -16,6 +16,7 @@ var antd_1 = require("antd");
 var axios_1 = require("axios");
 require("./Write.less");
 var react_markdown_1 = require("react-markdown");
+var context_1 = require("../../context");
 var TextArea = antd_1.Input.TextArea;
 var initalSate = { title: '', content: '' };
 function reducer(state, action) {
@@ -30,7 +31,7 @@ function reducer(state, action) {
 }
 function default_1() {
     var _a = react_1.useReducer(reducer, initalSate), state = _a[0], dispatch = _a[1];
-    // const data = useContext(context)
+    var data = react_1.useContext(context_1.context);
     function change(e, type) {
         if (type === void 0) { type = 'changeTitle'; }
         console.log(e.target.value);
@@ -43,7 +44,7 @@ function default_1() {
         if (!state.title || !state.title) {
             return;
         }
-        var url = 'http://localhost:8090/articles/send';
+        var url = data.host + "/articles/send";
         var fd = new FormData();
         fd.append('title', state.title);
         fd.append('content', state.content);
