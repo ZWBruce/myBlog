@@ -39,20 +39,16 @@ export default function () {
 
 
   useEffect(() => {
-    // const timer: any = setInterval(() => {
-    //   console.log(state)
-    //   if (state.count > 10) {
-    //     clearInterval(timer)
-    //     return
-    //   }
-    //   dispatch1({ type: 'add' })
-    // }, 1000)
 
-    // return () => {
-    //   clearInterval(timer)
-    // }
-    console.log(state)
-  }, [state])
+    axios(
+      {
+        url: 'http://localhost:8090/articles/list',
+        method: 'get'
+      }
+    ).then(res => {
+      console.log(res)
+    })
+  }, [])
 
   function upload() {
     const imgDom = imgRef.current as unknown
@@ -69,8 +65,12 @@ export default function () {
     ).then(res => {
       console.log(res)
     })
-    console.log((images as any[])[0])
   }
+
+
+  // function upload() {
+
+  // }
 
   return <div onClick={cb} className="main-wrapp">
     {val}main comp {state.count}

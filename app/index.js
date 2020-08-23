@@ -6,12 +6,11 @@ const fs = require('fs')
 const cors = require('koa2-cors');
 const body = require('koa-body')
 const process = require('shelljs')
+const { articles, tags } = require('./sql')
 
-const { fileRouter } = require('./router/index')
+const { fileRouter, articleRouter } = require('./router/index')
 
 const app = new Koa()
-
-app.use(cors())
 
 app.use(body({
   multipart: true, // 支持文件上传
@@ -61,22 +60,31 @@ router.post('/upload', (ctx) => {
 
 router.get('/update', (ctx) => {
   try {
-    process.exec('sudo cd /usr/local/myBlog && git pull && npm run go')
+    process.exec('sudo cd /usr/local/myBlog && git pull && npm run go && pm2 restart all')
     ctx.body = 'update success'
   } catch (e) {
     ctx.body = e
   }
 })
 
+// router.post('/articles')
+
 // console.log(fileRouter)
 
 router.redirect('/files', '/files/ls')
 app.use(fileRouter.routes())
 
+router.redirect('/articles', '/articles/list')
+app.use(articleRouter.routes())
+
 app.use(router.routes());
 
 app.use(stat(path.resolve(__dirname, 'static')));
 
+app.use(cors())
+
 // console.log('this is index js')
 
 app.listen(8090)
+
+// console.log('env: ', process.env.NODE_ENV)

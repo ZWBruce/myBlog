@@ -3,9 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { context } from './context'
+
+const globalData = {
+  test: 'abc'
+}
 
 ReactDOM.render(
-  <App />,
+  <context.Provider value={globalData} >
+    <App />
+  </context.Provider>,
   document.getElementById('root')
 );
 

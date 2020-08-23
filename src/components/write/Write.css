@@ -1,0 +1,10 @@
+.write-wrap .content {
+  height: calc(100vh - 100px);
+}
+.write-wrap .content .inner-content {
+  flex: 1;
+  overflow: scroll;
+}
+.write-wrap .content .inner-content textarea {
+  height: 100%;
+}

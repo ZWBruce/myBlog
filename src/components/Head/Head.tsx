@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import './Head.less'
 
 export default function (props: { children: ReactChild }) {
-  const links = [{
+  let links = [{
     text: '主页',
     url: '/index'
   },
@@ -16,6 +16,13 @@ export default function (props: { children: ReactChild }) {
     url: '/tags'
   }
   ]
+
+  if (process.env.NODE_ENV === 'development') {
+    links.push({
+      text: '写文章',
+      url: '/write'
+    })
+  }
 
   return <nav className="app-header">
     <div className="app app-inner-header">

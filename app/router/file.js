@@ -1,7 +1,6 @@
 const Router = require('koa-router')
 const fs = require('fs')
 const path = require('path')
-const send = require('koa-send')
 
 const fileBase = path.resolve(__dirname, '../upload')
 const list = fs.readdirSync(fileBase)
