@@ -87,7 +87,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "serve": "nodemon app/index.js",
+    "serve": "node app/index.js",
     "serve123:dev": "export NODE_ENV=development && nodemon app/index.js",
     "go": "node start.js"
   },
