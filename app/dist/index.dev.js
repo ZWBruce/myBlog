@@ -70,7 +70,7 @@ router.post('/upload', function (ctx) {
 });
 router.get('/update', function (ctx) {
   try {
-    process.exec('sudo cd /usr/local/myBlog && git pull && npm run go && pm2 restart all');
+    process.exec('sudo cd /usr/local/myBlog && git fetch --all && git reset --hard origin/master && npm run go && pm2 restart all');
     ctx.body = 'update success';
   } catch (e) {
     ctx.body = e;
