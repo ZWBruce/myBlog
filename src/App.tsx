@@ -10,10 +10,11 @@ import './App.less';
 function App() {
   return (
     <HashRouter>
+
+      <Head>
+        zw
+      </Head>
       <div className='app'>
-        <Head>
-          zw
-        </Head>
         <MarkDown source={'# This is a header\n\n**And this is a paragraph**'} />
         <Route path='/index' component={Main} />
         <Route path='/catagory' component={Catagory} />

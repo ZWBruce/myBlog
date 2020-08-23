@@ -47,6 +47,7 @@
     "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^9.1.0",
+    "koa-send": "^5.0.1",
     "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
     "less": "^3.12.2",
@@ -85,6 +86,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "serve": "node app/index.js",
+    "serve:dev": "nodemon app/index.js",
     "go": "node start.js"
   },
   "eslintConfig": {

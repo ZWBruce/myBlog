@@ -17,19 +17,20 @@ export default function (props: { children: ReactChild }) {
   }
   ]
 
-  const [active, setActive] = useState(0)
   return <nav className="app-header">
-    {
-      React.Children.map(props.children, child => {
-        return <div>{child}</div>
-      })
-    }
-    <div className="links">
+    <div className="app app-inner-header">
       {
-        links.map(({ url, text }, ind) => {
-          return <NavLink to={url} key={ind} activeClassName="active">{text}</NavLink>
+        React.Children.map(props.children, child => {
+          return <div>{child}</div>
         })
       }
+      <div className="links">
+        {
+          links.map(({ url, text }, ind) => {
+            return <NavLink to={url} key={ind} activeClassName="active">{text}</NavLink>
+          })
+        }
+      </div>
     </div>
   </nav>
 }

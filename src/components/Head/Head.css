@@ -1,6 +1,4 @@
 .app-header {
-  display: flex;
-  align-items: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 .app-header .links {
@@ -17,4 +15,9 @@
 }
 .app-header .links > a.active {
   color: #3273dc;
+}
+.app-inner,
+.app-inner-header {
+  display: flex;
+  align-items: center;
 }

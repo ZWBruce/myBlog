@@ -5,6 +5,9 @@ const path = require('path')
 const fs = require('fs')
 const cors = require('koa2-cors');
 const body = require('koa-body')
+const process = require('child_process')
+
+const { fileRouter } = require('./router/index')
 
 const app = new Koa()
 
@@ -32,10 +35,18 @@ router.get('/user', (ctx) => {
   ctx.body = 'user的首页' + __dirname;
 });
 
-router.redirect('/', './index.html')
-// router.get('/', (ctx) => {
-//   ctx.body = '<h1>Hello World!</h1>'
-// });
+// router.redirect('/', './index.html')
+router.get('/', (ctx) => {
+  ctx.set('Content-type', 'text/html')
+  try {
+    let p = path.resolve(__dirname, './static/index.html')
+    let file = fs.readFileSync(p)
+    ctx.body = file
+  } catch {
+    ctx.body = '<h1>404 Not Found</h1>'
+  }
+
+});
 
 router.post('/upload', (ctx) => {
   console.log('body', ctx.request.body)
@@ -48,24 +59,19 @@ router.post('/upload', (ctx) => {
 
 })
 
-router.get('/files', (ctx) => {
-  const pth = path.resolve(__dirname, './upload')
-  const list = fs.readdirSync(pth)
-  const ls = list.map(t => {
-    let filePath = path.join(pth, t)
-    let type = 'file'
-    if (fs.statSync(filePath).isDirectory()) {
-      type = 'dir'
-    }
-    return {
-      type,
-      name: t
-    }
-  })
-  ctx.body = {
-    list: ls
+router.get('/update', (ctx) => {
+  try {
+    process.execSync('cd /usr/local/myBlog && git pull')
+    ctx.body = 'update success'
+  } catch (e) {
+    ctx.body = 'error' + e
   }
 })
+
+// console.log(fileRouter)
+
+router.redirect('/files', '/files/ls')
+app.use(fileRouter.routes())
 
 app.use(router.routes());
 

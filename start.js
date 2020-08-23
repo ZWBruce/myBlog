@@ -19,5 +19,5 @@ try {
 }
 
 console.log('启动容器...')
-process.exec('docker run --name=my-blog -d -p 8090:8090 my-blog:1.0.0')
+process.exec('docker run --name=my-blog -d -p 80:8090 my-blog:1.0.0')
 console.log('完成！')
