@@ -6,8 +6,9 @@ require("./index.css");
 var App_1 = require("./App");
 var serviceWorker = require("./serviceWorker");
 var context_1 = require("./context");
+var host = process.env.NODE_ENV === 'development' ? 'http://localhost:8090' : 'http://39.96.31.138';
 var globalData = {
-    test: 'abc'
+    host: host
 };
 react_dom_1["default"].render(react_1["default"].createElement(context_1.context.Provider, { value: globalData },
     react_1["default"].createElement(App_1["default"], null)), document.getElementById('root'));

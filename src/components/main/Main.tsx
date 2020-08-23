@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo, useReducer, useEffect, useRef } from 'react'
+import React, { useCallback, useMemo, useReducer, useEffect, useRef, useContext } from 'react'
 import { Button } from 'antd'
 import axios from 'axios'
+import { context } from '../../context'
 import './Main.less'
 
 interface Act {
@@ -32,6 +33,7 @@ export default function () {
     return '三只松鼠'
   }, [])
   console.log({ val, cb })
+  const data = useContext(context)
 
   const imgRef = useRef(null)
 
@@ -42,13 +44,13 @@ export default function () {
 
     axios(
       {
-        url: 'http://localhost:8090/articles/list',
+        url: `${data.host}/articles/list`,
         method: 'get'
       }
     ).then(res => {
       console.log(res)
     })
-  }, [])
+  }, [data.host])
 
   function upload() {
     const imgDom = imgRef.current as unknown
@@ -58,7 +60,7 @@ export default function () {
     fd.append('msg', 'abcd')
     axios(
       {
-        url: 'http://localhost:8090/upload',
+        url: `${data.host}/upload`,
         method: 'post',
         data: fd
       }
