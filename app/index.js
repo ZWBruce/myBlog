@@ -5,7 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const cors = require('koa2-cors');
 const body = require('koa-body')
-const process = require('child_process')
+const process = require('shelljs')
 
 const { fileRouter } = require('./router/index')
 
@@ -61,10 +61,10 @@ router.post('/upload', (ctx) => {
 
 router.get('/update', (ctx) => {
   try {
-    process.execSync('cd /usr/local/myBlog && git pull')
+    process.exec('sudo cd /usr/local/myBlog && git pull && npm run go')
     ctx.body = 'update success'
   } catch (e) {
-    ctx.body = 'error' + e
+    ctx.body = e
   }
 })
 
