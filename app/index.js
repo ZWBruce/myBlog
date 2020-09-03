@@ -6,18 +6,28 @@ const fs = require('fs')
 const cors = require('koa2-cors');
 const body = require('koa-body')
 const process = require('shelljs')
-const { articles, tags } = require('./sql')
+const {
+  articles,
+  tags
+} = require('./sql')
 
-const { fileRouter, articleRouter } = require('./router/index')
+const {
+  fileRouter,
+  articleRouter
+} = require('./router/index')
+
+process.exec('mysql.server start')
 
 const app = new Koa()
+
+app.use(cors())
 
 app.use(body({
   multipart: true, // 支持文件上传
   // encoding: 'gzip', // 会报跨域
   formidable: {
     uploadDir: path.join(__dirname, 'upload/'), // 设置文件上传目录
-    keepExtensions: true,    // 保持文件的后缀
+    keepExtensions: true, // 保持文件的后缀
     maxFieldsSize: 200 * 1024 * 1024, // 文件上传大小
     onFileBegin: (name, file) => { // 文件上传前的设置
 
@@ -50,10 +60,10 @@ router.get('/', (ctx) => {
 router.post('/upload', (ctx) => {
   console.log('body', ctx.request.body)
   // ctx.set('Access-Control-Allow-Origin', '*');
+  const name = ctx.request.files.image.name
   ctx.body = {
     status: 200,
-    data: ctx.request.body,
-    file: ctx.request.files,
+    data: '/files/download?name=' + name,
   }
 
 })
@@ -81,7 +91,6 @@ app.use(router.routes());
 
 app.use(stat(path.resolve(__dirname, 'static')));
 
-app.use(cors())
 
 // console.log('this is index js')
 

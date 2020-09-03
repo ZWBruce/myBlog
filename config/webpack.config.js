@@ -303,9 +303,10 @@ module.exports = function (webpackEnv) {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
+        '@': paths.appSrc,
+        '@c': paths.comSrc,
         ...(modules.webpackAliases || {}),
-        '@': '../src',
-        '@c': '../src/components'
+
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

@@ -3,7 +3,8 @@ exports.__esModule = true;
 var react_1 = require("react");
 var antd_1 = require("antd");
 var axios_1 = require("axios");
-var context_1 = require("../../context");
+var context_1 = require("@/context");
+var Card_1 = require("../Card");
 require("./Main.less");
 var initalSate = { count: 0 };
 function reducer(state, action) {
@@ -54,6 +55,10 @@ function default_1() {
     // function upload() {
     // }
     return react_1["default"].createElement("div", { onClick: cb, className: "main-wrapp" },
+        react_1["default"].createElement("div", { className: "flex-left" },
+            react_1["default"].createElement(Card_1["default"], null)),
+        react_1["default"].createElement("div", { className: "flex-center" }),
+        react_1["default"].createElement("div", { className: "flex-right" }),
         val,
         "main comp ",
         state.count,

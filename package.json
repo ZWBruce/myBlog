@@ -88,7 +88,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "serve": "node app/index.js",
-    "serve123:dev": "export NODE_ENV=development && nodemon app/index.js",
+    "serve:dev": "export NODE_ENV=development && nodemon app/index.js",
+    "serve1:dev": "export NODE_ENV=development && node app/index.js",
     "go": "node start.js"
   },
   "eslintConfig": {

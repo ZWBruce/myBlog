@@ -22,9 +22,11 @@ var _require = require('./sql'),
 
 var _require2 = require('./router/index'),
     fileRouter = _require2.fileRouter,
-    articleRouter = _require2.articleRouter;
+    articleRouter = _require2.articleRouter; // process.exec('mysql.server start')
+
 
 var app = new Koa();
+app.use(cors());
 app.use(body({
   multipart: true,
   // 支持文件上传
@@ -62,10 +64,10 @@ router.get('/', function (ctx) {
 router.post('/upload', function (ctx) {
   console.log('body', ctx.request.body); // ctx.set('Access-Control-Allow-Origin', '*');
 
+  var name = ctx.request.files.image.name;
   ctx.body = {
     status: 200,
-    data: ctx.request.body,
-    file: ctx.request.files
+    data: '/files/download?name=' + name
   };
 });
 router.get('/update', function (ctx) {
@@ -83,7 +85,6 @@ app.use(fileRouter.routes());
 router.redirect('/articles', '/articles/list');
 app.use(articleRouter.routes());
 app.use(router.routes());
-app.use(stat(path.resolve(__dirname, 'static')));
-app.use(cors()); // console.log('this is index js')
+app.use(stat(path.resolve(__dirname, 'static'))); // console.log('this is index js')
 
 app.listen(8090); // console.log('env: ', process.env.NODE_ENV)

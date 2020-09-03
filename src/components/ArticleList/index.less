@@ -1,0 +1,38 @@
+.list-wrap {
+  padding: 21px;
+
+  .item-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &:not(:first-of-type) {
+      padding-top: 10.5px;
+    }
+
+    &:not(:last-of-type) {
+      margin-bottom: 10.5px;
+    }
+
+    img {
+      object-fit: cover;
+      width: 64px;
+      height: 64px;
+      margin-right: 20px;
+    }
+
+    .item-right {
+      width: calc(100% - 84px);
+
+      .title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &>div {
+        line-height: 1.5;
+      }
+    }
+  }
+}

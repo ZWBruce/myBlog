@@ -1,0 +1,16 @@
+.article-wrap img {
+  width: 100%;
+  height: 242px;
+  object-fit: cover;
+}
+.article-wrap .content-wrap {
+  padding: 21px;
+}
+.article-wrap .content-wrap .title {
+  color: #242424;
+  margin-bottom: 21px;
+  font-size: 28px;
+}
+.article-wrap .content-wrap .abstract {
+  font-size: 15.4px;
+}

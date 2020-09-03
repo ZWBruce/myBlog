@@ -1,4 +1,6 @@
 .main-wrapp {
+  max-width: 960px;
+  width: 960px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -8,9 +10,6 @@
 }
 .main-wrapp .flex-left {
   width: 25%;
-}
-.main-wrapp .flex-left > div:not(:first-of-type) {
-  margin-top: 20px;
 }
 .main-wrapp .flex-center {
   width: 50%;

@@ -1,7 +1,11 @@
 import React, { useCallback, useMemo, useReducer, useEffect, useRef, useContext } from 'react'
 import { Button } from 'antd'
 import axios from 'axios'
-import { context } from '../../context'
+import { context } from '@/context'
+import Card from '@c/Card'
+import Article from '@c/Article'
+import ArticleList from '@c/ArticleList'
+import TagList from '@c/TagList'
 import './Main.less'
 
 interface Act {
@@ -33,7 +37,7 @@ export default function () {
     return '三只松鼠'
   }, [])
   console.log({ val, cb })
-  const data = useContext(context)
+  const data: any = useContext(context)
 
   const imgRef = useRef(null)
 
@@ -75,8 +79,19 @@ export default function () {
   // }
 
   return <div onClick={cb} className="main-wrapp">
+    <div className="flex-left">
+      <Card />
+      <TagList />
+    </div>
+    <div className="flex-center">
+      <Article />
+    </div>
+    <div className="flex-right">
+      <ArticleList />
+    </div>
     {val}main comp {state.count}
     <input type="file" ref={imgRef} />
+
     <Button type="primary" onClick={upload}>add</Button>
   </div>
 }
