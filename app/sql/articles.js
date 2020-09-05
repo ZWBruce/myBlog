@@ -1,12 +1,18 @@
 const seq = require('./db')
-const { INTEGER, STRING, TEXT } = require('sequelize')
-const { stringify } = require('querystring')
+const {
+  INTEGER,
+  STRING,
+  TEXT
+} = require('sequelize')
+const {
+  stringify
+} = require('querystring')
 
 const articles = seq.define('articles', {
   id: {
     type: INTEGER,
-    primaryKey: true,       //主键
-    autoIncrement: true,    //自增
+    primaryKey: true, //主键
+    autoIncrement: true, //自增
   },
   title: {
     type: STRING,
@@ -27,7 +33,7 @@ const articles = seq.define('articles', {
   tag_id: {
     type: INTEGER,
     // allowNull: false
-    defaultValue: 0
+    defaultValue: 1
   }
 
 }, {
@@ -35,7 +41,5 @@ const articles = seq.define('articles', {
   timestamps: false
 })
 
-articles.sync()
-console.log('articles0: ', articles.create)
 // sequelize.
 module.exports = articles

@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useReducer, useEffect, useRef, useContext } from 'react'
 import { Button } from 'antd'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import { context } from '@/context'
 import Card from '@c/Card'
 import Article from '@c/Article'
@@ -27,16 +28,7 @@ function reducer(state: any, action: Act) {
   }
 }
 
-export default function () {
-  const cb = useCallback(() => {
-    console.log('use callback')
-  }, [])
-
-  const val = useMemo(() => {
-    console.log('in use memo')
-    return '三只松鼠'
-  }, [])
-  console.log({ val, cb })
+function Main(props: any) {
   const data: any = useContext(context)
 
   const imgRef = useRef(null)
@@ -78,20 +70,27 @@ export default function () {
 
   // }
 
-  return <div onClick={cb} className="main-wrapp">
+  return <div className="main-wrapp">
     <div className="flex-left">
       <Card />
       <TagList />
     </div>
     <div className="flex-center">
-      <Article />
+      {
+        props.articleList.map((t: any) => {
+          return <Article info={t} key={t.id} />
+        })
+      }
+
     </div>
     <div className="flex-right">
       <ArticleList />
     </div>
-    {val}main comp {state.count}
+    main comp {state.count}
     <input type="file" ref={imgRef} />
 
     <Button type="primary" onClick={upload}>add</Button>
   </div>
 }
+
+export default connect(state => ({ ...state }))(Main)

@@ -1,35 +1,23 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect, useCallback } from 'react'
 import { context } from '@/context'
+import { connect } from 'react-redux'
+import dayjs from 'dayjs'
 import './index.less'
-import { Divider } from 'antd'
 
-export default function () {
+function ArticleList(props: any) {
   const data: any = useContext(context)
 
-  const [list, setList] = useState([{
-    title: 'http协议分析',
-    tag: '前端',
-    date: '2020-02-29',
-    id: 0
-  },
-  {
-    title: 'http协议分析',
-    tag: '前端',
-    date: '2020-02-29',
-    id: 1
-  },
-  {
-    title: 'http协议分析',
-    tag: '前端',
-    date: '2020-02-29',
-    id: 2
-  },
-  {
-    title: 'http协议分析',
-    tag: '前端',
-    date: '2020-02-29',
-    id: 3
-  }])
+  const [list, setList] = useState<any[]>([])
+
+  const format = useCallback((n: string | number) => {
+    n = +n
+    return dayjs(n).format('YYYY-MM-DD HH:mm:ss')
+  }, [])
+
+  useEffect(() => {
+    setList(props.sortedArticle)
+    console.log(props.sortedArticle)
+  }, [props.sortedArticle])
 
   return <div className="list-wrap card-bg">
     <div className="notice mb-10">
@@ -38,14 +26,16 @@ export default function () {
     <div>
       {
         list.map(t => <div className="item-wrap" key={t.id}>
-          <img src={`${data.host}/files/download?name=1.jpg`} alt={t.title} />
+          <img src={t.img || `${data.host}/files/download?name=1.jpg`} alt={t.title} />
           <div className="item-right">
-            <div className="date notice">{t.date}</div>
+            <div className="date notice">{format(t.time)}</div>
             <div className="title link">{t.title}</div>
-            <div className="tag notice">{t.tag}</div>
+            <div className="tag notice">{t.tag.tag_name}</div>
           </div>
         </div>)
       }
     </div>
   </div>
 }
+
+export default connect(state => ({ ...state }))(ArticleList)

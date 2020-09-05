@@ -13,11 +13,15 @@ const {
 
 const {
   fileRouter,
-  articleRouter
+  articleRouter,
+  tagsRouter
 } = require('./router/index')
 
-process.exec('mysql.server start')
-
+try {
+  process.exec('mysql.server start')
+} catch (e) {
+  console.log(e)
+}
 const app = new Koa()
 
 app.use(cors())
@@ -84,7 +88,12 @@ router.get('/update', (ctx) => {
 router.redirect('/files', '/files/ls')
 app.use(fileRouter.routes())
 
+router.redirect('/tags', '/tags/list')
+router.redirect('/tags/', '/tags/list')
+app.use(tagsRouter.routes())
+
 router.redirect('/articles', '/articles/list')
+router.redirect('/articles/', '/articles/list')
 app.use(articleRouter.routes())
 
 app.use(router.routes());
