@@ -16,7 +16,6 @@ function ArticleList(props: any) {
 
   useEffect(() => {
     setList(props.sortedArticle)
-    console.log(props.sortedArticle)
   }, [props.sortedArticle])
 
   return <div className="list-wrap card-bg">
@@ -30,7 +29,13 @@ function ArticleList(props: any) {
           <div className="item-right">
             <div className="date notice">{format(t.time)}</div>
             <div className="title link">{t.title}</div>
-            <div className="tag notice">{t.tag.tag_name}</div>
+            <div className="tag-wrap">
+              {
+                t.tags.map((t: any, ind: number) => <div className="tag notice" key={ind}>
+                  {t.tag_name}
+                </div>)
+              }
+            </div>
           </div>
         </div>)
       }

@@ -1,25 +1,24 @@
 const seq = require('./db')
 const {
   INTEGER,
-  STRING
+  STRING,
 } = require('sequelize')
 
-const tags = seq.define('tags', {
+const category = seq.define('category', {
   id: {
     type: INTEGER,
-    primaryKey: true, //主键
-    autoIncrement: true, //自增
+    primaryKey: true,
+    autoIncrement: true
   },
-  tag_name: {
+  category_name: {
     type: STRING,
     allowNull: false
   }
-
 }, {
   freezeTableName: true,
   timestamps: false
 })
 
-tags.sync()
-// sequelize.
-module.exports = tags
+category.sync()
+
+module.exports = category

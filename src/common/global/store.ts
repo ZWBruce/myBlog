@@ -10,13 +10,16 @@ const initalState: any = {
   count: 1,
   articleCount: 0,
   tagsCount: 0,
+  ctgCount: 0,
   articleList: [],
   tagsList: [],
-  sortedArticle: []
+  sortedArticle: [],
+  ctgList: []
 }
 
 function reducer(state = initalState, action: Act) {
   let { type, val } = action
+  let { tagsList, ctgList } = state
   switch (type) {
     case 'ADD':
       return {
@@ -24,7 +27,7 @@ function reducer(state = initalState, action: Act) {
         count: state.count + 1
       };
     case 'GET_ARTICLE_LIST':
-      let sorted = val.list.sort((b: any, a: any) => a.time - b.time)
+      let sorted = val.list.sort((b: any, a: any) => a.time - b.time).slice(0, 5)
       return {
         ...state,
         articleCount: val.count,
@@ -36,6 +39,26 @@ function reducer(state = initalState, action: Act) {
         ...state,
         tagsCount: val.count,
         tagsList: val.list
+      }
+    case 'ADD_TAG':
+      tagsList.push(val)
+      console.log({ tagsList })
+      return {
+        ...state,
+        tagsList: [...tagsList]
+      }
+    case 'GET_CTG_LIST':
+      return {
+        ...state,
+        ctgCount: val.count,
+        ctgList: val.list
+      }
+    case 'ADD_CTG':
+      ctgList.push(val)
+      console.log({ ctgList })
+      return {
+        ...state,
+        ctgList: [...ctgList]
       }
     default:
       return state

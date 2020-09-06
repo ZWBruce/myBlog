@@ -1,42 +1,34 @@
-import React, { useContext, useState } from 'react'
-import { context } from '@/context'
+import React, { useMemo } from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
 import './index.less'
 
-export default function () {
-  const data: any = useContext(context)
+function TagList(props: any) {
 
-  const [list, setList] = useState([{
-    tag: '前端1',
-    num: 2,
-    id: 0
-  },
-  {
-    tag: '前端2',
-    num: 3,
-    id: 1
-  },
-  {
-    tag: '前端3',
-    num: 4,
-    id: 2
-  },
-  {
-    tag: '前端4',
-    num: 5,
-    id: 3
-  }])
+  const inTags = useMemo(() => {
+    return props.location.pathname === '/tags'
+  }, [props.location.pathname])
+
+  function jump() {
+    if (!inTags) {
+      props.history.push('/tags')
+    }
+  }
 
   return <div className="tag-wrap card-bg">
-    <div className="notice mb-10">
-      分类
+    <div className="notice mb-10 card-head">
+      <span>标签</span>
+      <a onClick={jump} style={{ visibility: inTags ? 'hidden' : 'visible' }}>查看更多</a>
     </div>
     <ul>
       {
-        list.map(t => <li className="item-wrap" key={t.id}>
-          <span>{t.tag}</span>
-          <span>{t.num}</span>
+        props.tagsList.map((t: any) => <li className="item-wrap" key={t.id}>
+          <a>{t.tag_name}</a>
         </li>)
       }
     </ul>
   </div>
 }
+
+export default connect(state => ({ ...state }))(withRouter(TagList))

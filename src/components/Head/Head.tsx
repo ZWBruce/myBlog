@@ -8,11 +8,11 @@ export default function (props: { children: ReactChild }) {
     url: '/index'
   },
   {
-    text: '淘宝',
+    text: '分类',
     url: '/catagory'
   },
   {
-    text: '字节跳动',
+    text: '标签',
     url: '/tags'
   }
   ]
@@ -21,6 +21,9 @@ export default function (props: { children: ReactChild }) {
     links.push({
       text: '写文章',
       url: '/write'
+    }, {
+      text: '图库',
+      url: '/pic'
     })
   }
 

@@ -27,7 +27,15 @@ function Card(props: any) {
       <div className="level-item">
         <p className="heading">
           分类
-      </p>
+        </p>
+        <p className="title">
+          {props.ctgCount}
+        </p>
+      </div>
+      <div className="level-item">
+        <p className="heading">
+          标签
+        </p>
         <p className="title">
           {props.tagsCount}
         </p>

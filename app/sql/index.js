@@ -1,22 +1,37 @@
 const tags = require('./tag.js')
 const articles = require('./articles.js')
+const articles2tag = require('./articles2tag')
+const category = require('./category')
 
-articles.hasOne(tags, {
+articles.hasOne(category, {
   foreignKey: 'id',
   sourceKey: 'tag_id',
   constraints: false,
 })
 
-// tags.belongsTo(articles, {
-//   foreignKey: 'tag_id',
-//   targetKey: 'id',
-//   constraints: false,
-// })
+// self.sourceKey = out.foreignKey
+articles.belongsToMany(tags, {
+  through: {
+    model: articles2tag,
+    unique: false
+  },
+  foreignKey: 'article_id',
+  constraints: false,
+})
 
-articles.sync()
-tags.sync()
+tags.belongsToMany(articles, {
+  through: {
+    model: articles2tag,
+    unique: false
+  },
+  foreignKey: 'tag_id',
+  constraints: false,
+})
+
 
 module.exports = {
   tags,
-  articles
+  articles,
+  articles2tag,
+  category
 }

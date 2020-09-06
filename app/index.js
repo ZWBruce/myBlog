@@ -7,14 +7,11 @@ const cors = require('koa2-cors');
 const body = require('koa-body')
 const process = require('shelljs')
 const {
-  articles,
-  tags
-} = require('./sql')
-
-const {
   fileRouter,
   articleRouter,
-  tagsRouter
+  tagsRouter,
+  articleTagRouter,
+  categoryRouter
 } = require('./router/index')
 
 try {
@@ -95,6 +92,10 @@ app.use(tagsRouter.routes())
 router.redirect('/articles', '/articles/list')
 router.redirect('/articles/', '/articles/list')
 app.use(articleRouter.routes())
+
+app.use(articleTagRouter.routes())
+
+app.use(categoryRouter.routes())
 
 app.use(router.routes());
 

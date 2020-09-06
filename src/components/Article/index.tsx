@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useEffect } from 'react'
 import { context } from '@/context'
 import './index.less'
 
@@ -15,7 +15,7 @@ export default function (props: any) {
     <div className="content-wrap">
       <div className="notice mb-7">
         <span>1天前</span>
-        <span>前端</span>
+        <span>{props.info.category && props.info.category.category_name}</span>
       </div>
       <h1 className="title link">
         {props.info.title}

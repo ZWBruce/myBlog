@@ -3,7 +3,6 @@ const fs = require('fs')
 const path = require('path')
 
 const fileBase = path.resolve(__dirname, '../upload')
-const list = fs.readdirSync(fileBase)
 
 const router = new Router({
   prefix: '/files'
@@ -11,6 +10,7 @@ const router = new Router({
 
 router.get('/ls', (ctx) => {
   console.log(ctx.query, ctx.params)
+  const list = fs.readdirSync(fileBase)
   const ls = list.map(t => {
     let filePath = path.join(fileBase, t)
     let type = 'file'
@@ -19,7 +19,7 @@ router.get('/ls', (ctx) => {
     }
     return {
       type,
-      name: t
+      name: `/files/download?name=${t}`
     }
   })
   ctx.body = {
@@ -28,6 +28,7 @@ router.get('/ls', (ctx) => {
 })
 
 router.get('/download', ctx => {
+  const list = fs.readdirSync(fileBase)
   if (ctx.query.name) {
     console.log(list)
     for (let f of list) {
@@ -43,8 +44,7 @@ router.get('/download', ctx => {
       }
     }
     ctx.body = '<h1>file not found</h1>'
-  }
-  else {
+  } else {
     ctx.body = '<h1>file not found</h1>'
   }
 

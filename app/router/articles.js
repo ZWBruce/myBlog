@@ -1,7 +1,9 @@
 const Router = require('koa-router')
 const {
   articles,
-  tags
+  tags,
+  articles2tag,
+  category
 } = require('../sql')
 const cors = require('koa2-cors');
 
@@ -16,15 +18,29 @@ router.post('/send', async (ctx) => {
   console.log(ctx.request.body)
   const {
     title,
-    content
+    content,
+    img,
+    tag_id,
+    category
   } = ctx.request.body
   try {
     const time = +new Date()
     let res = await articles.create({
       title,
       content,
-      time
+      img,
+      time,
+      tag_id: category // 此处应该为category_id 懒得改了
     })
+    if (tag_id) {
+      let ids = tag_id.split(',')
+      for (let e of ids) {
+        await articles2tag.create({
+          article_id: res.id,
+          tag_id: e
+        })
+      }
+    }
     ctx.body = res
   } catch (e) {
     ctx.body = e
@@ -45,6 +61,9 @@ router.get('/list', async (ctx) => {
     include: [{
       model: tags,
       attributes: ['tag_name'],
+    }, {
+      model: category,
+      attributes: ['category_name']
     }]
   })
   ctx.body = {

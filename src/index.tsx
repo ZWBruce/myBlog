@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Toast from '@c/toast'
 import * as serviceWorker from './serviceWorker';
 import { context } from './context'
 import * as dayjs from 'dayjs'
@@ -16,10 +17,18 @@ dayjs.extend(duration)
 dayjs.extend(isLeapYear) // 使用插件
 dayjs.locale('zh-cn') // 使用本地化语言
 
+const con = document.createElement('div')
+con.id = 'cmp-container'
+document.body.appendChild(con)
+
 const host = process.env.NODE_ENV === 'development' ? 'http://localhost:8090' : 'http://39.96.31.138'
 const globalData = {
   host,
-  dayjs
+  dayjs,
+  showToast(msg: string) {
+    const cmp: any = Toast
+    cmp.showToast(msg)
+  }
 }
 
 ReactDOM.render(
@@ -27,6 +36,7 @@ ReactDOM.render(
     <context.Provider value={globalData} >
       <App />
     </context.Provider>
+    <Toast />
   </Provider>,
   document.getElementById('root')
 );

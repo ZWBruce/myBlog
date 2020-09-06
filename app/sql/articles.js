@@ -4,9 +4,6 @@ const {
   STRING,
   TEXT
 } = require('sequelize')
-const {
-  stringify
-} = require('querystring')
 
 const articles = seq.define('articles', {
   id: {
@@ -30,10 +27,11 @@ const articles = seq.define('articles', {
     type: STRING,
     allowNull: false
   },
+  // 此处应该为category_id 懒得改了
   tag_id: {
     type: INTEGER,
-    // allowNull: false
-    defaultValue: 1
+    allowNull: true
+    // defaultValue: 1
   }
 
 }, {
@@ -41,5 +39,6 @@ const articles = seq.define('articles', {
   timestamps: false
 })
 
+articles.sync()
 // sequelize.
 module.exports = articles
