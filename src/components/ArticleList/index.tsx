@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react'
 import { context } from '@/context'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.less'
 
@@ -28,12 +29,13 @@ function ArticleList(props: any) {
           <img src={t.img || `${data.host}/files/download?name=1.jpg`} alt={t.title} />
           <div className="item-right">
             <div className="date notice">{format(t.time)}</div>
-            <div className="title link">{t.title}</div>
+            <div className="title link" onClick={() => { data.jump(props, t.id) }}>{t.title}</div>
             <div className="tag-wrap">
               {
-                t.tags.map((t: any, ind: number) => <div className="tag notice" key={ind}>
-                  {t.tag_name}
-                </div>)
+                t.tags.map((t: any, ind: number) =>
+                  <div className="tag notice link" key={ind} onClick={() => { data.jump(props, t.id, 'tags') }}>
+                    {t.tag_name}
+                  </div>)
               }
             </div>
           </div>
@@ -43,4 +45,4 @@ function ArticleList(props: any) {
   </div>
 }
 
-export default connect(state => ({ ...state }))(ArticleList)
+export default connect(state => ({ ...state }))(withRouter(ArticleList))

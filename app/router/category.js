@@ -1,7 +1,8 @@
 const Router = require('koa-router')
 const {
   category,
-  articles
+  articles,
+  tags
 } = require('../sql')
 const cors = require('koa2-cors');
 
@@ -53,4 +54,37 @@ router.post('/add', async (ctx) => {
 
 })
 
+router.get('/articles/:id', async (ctx) => {
+  let {
+    page
+  } = ctx.request.query
+  page = page || 1
+  page = page <= 1 ? 1 : page
+  let id = ctx.request.params.id
+  id = id < 1 ? 1 : id
+  let count = await articles.count({
+    where: {
+      tag_id: id
+    },
+  })
+  const list = await articles.findAll({
+    limit: 10,
+    offset: 10 * (page - 1),
+    where: {
+      tag_id: id
+    },
+    include: [{
+      model: tags,
+      attributes: ['tag_name', 'id'],
+    }, {
+      model: category,
+      attributes: ['category_name', 'id']
+    }]
+  })
+  ctx.body = {
+    list,
+    count
+  }
+
+})
 module.exports = router

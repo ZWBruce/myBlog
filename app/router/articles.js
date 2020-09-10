@@ -56,20 +56,35 @@ router.get('/list', async (ctx) => {
   page = page <= 1 ? 1 : page
   let count = await articles.count()
   let list = await articles.findAll({
-    limit: 20,
-    offset: 20 * (page - 1),
+    limit: 10,
+    offset: 10 * (page - 1),
     include: [{
       model: tags,
-      attributes: ['tag_name'],
+      attributes: ['tag_name', 'id'],
     }, {
       model: category,
-      attributes: ['category_name']
+      attributes: ['category_name', 'id']
     }]
   })
   ctx.body = {
     list,
     count
   }
+})
+
+router.get('/:id', async (ctx) => {
+  let {
+    id
+  } = ctx.request.params
+
+  console.log(id)
+  let res = await articles.findOne({
+    where: {
+      id
+    }
+  })
+
+  ctx.body = res
 })
 
 module.exports = router

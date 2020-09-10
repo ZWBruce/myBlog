@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { context } from '@/context'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import './index.less'
 import dayjs from 'dayjs'
 
@@ -13,18 +14,18 @@ function Card(props: any) {
 
   return <div className="card-content card-bg">
     <img src={`${data.host}/files/download?name=1.jpg`} alt="" />
-    <span className="name" onClick={() => { props.add() }}>凉城{props.count}</span>
-    <span onClick={() => { props.asyncAdd() }}>不负初心，方得始终</span>
+    <span className="name">凉城</span>
+    <span>不负初心，方得始终</span>
     <nav className="level">
-      <div className="level-item">
+      <div className="level-item link" onClick={() => { data.jump(props, '', 'index') }}>
         <p className="heading">
           文章
-      </p>
+        </p>
         <p className="title">
           {props.articleCount}
         </p>
       </div>
-      <div className="level-item">
+      <div className="level-item link" onClick={() => { data.jump(props, 0, 'catagory') }}>
         <p className="heading">
           分类
         </p>
@@ -32,7 +33,7 @@ function Card(props: any) {
           {props.ctgCount}
         </p>
       </div>
-      <div className="level-item">
+      <div className="level-item link" onClick={() => { data.jump(props, 0, 'tags') }}>
         <p className="heading">
           标签
         </p>
@@ -45,17 +46,4 @@ function Card(props: any) {
   </div>
 }
 
-export default connect(state => ({ ...state }), {
-  add() {
-    return {
-      type: 'ADD'
-    }
-  },
-  asyncAdd() {
-    return function (dispatch: Function, getState: any) {
-      setTimeout(() => {
-        dispatch({ type: 'ADD' })
-      }, 2000)
-    }
-  }
-})(Card)
+export default connect(state => ({ ...state }))(withRouter(Card))

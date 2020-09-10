@@ -45,7 +45,15 @@ router.post('/add', async (ctx) => {
 
 })
 
+/**
+ * 获取某tag对应的所有文章
+ */
 router.get('/articles/:id', async (ctx) => {
+  let {
+    page
+  } = ctx.request.query
+  page = page || 1
+  page = page <= 1 ? 1 : page
   let id = ctx.request.params.id
   const list = await tags.findAll({
     include: [{
@@ -57,23 +65,29 @@ router.get('/articles/:id', async (ctx) => {
     }
   })
 
-  let ids = list[0].dataValues.articles.map(t => t.id)
-  const list1 = await articles.findAll({
-    where: {
-      id: ids
-    },
-    include: [{
-      model: tags,
-      attributes: ['tag_name'],
-    }, {
-      model: category,
-      attributes: ['category_name']
-    }]
-  })
-
+  let list1 = [],
+    ids = []
+  if (list[0]) {
+    ids = list[0].dataValues.articles.map(t => t.id)
+    list1 = await articles.findAll({
+      limit: 10,
+      offset: 10 * (page - 1),
+      where: {
+        id: ids
+      },
+      include: [{
+        model: tags,
+        attributes: ['tag_name', 'id'],
+      }, {
+        model: category,
+        attributes: ['category_name', 'id']
+      }]
+    })
+  }
   ctx.body = {
     list: list1,
-    ids
+    ids,
+    count: ids.length
   }
 })
 

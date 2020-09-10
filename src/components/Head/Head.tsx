@@ -9,11 +9,11 @@ export default function (props: { children: ReactChild }) {
   },
   {
     text: '分类',
-    url: '/catagory'
+    url: '/catagory/0'
   },
   {
     text: '标签',
-    url: '/tags'
+    url: '/tags/0'
   }
   ]
 

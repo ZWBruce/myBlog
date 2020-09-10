@@ -28,6 +28,9 @@ const globalData = {
   showToast(msg: string) {
     const cmp: any = Toast
     cmp.showToast(msg)
+  },
+  jump(props: any, id: number | string, type: string = 'article') {
+    props.history.push(`/${type}${id !== '' ? '/' + id : ''}`)
   }
 }
 

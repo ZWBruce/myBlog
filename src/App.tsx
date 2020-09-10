@@ -5,6 +5,7 @@ import Catagory from '@c/category/index'
 import Tags from '@c/tags/index'
 import Write from '@c/write/Write'
 import Gallary from '@c/gallary'
+import ArticleInfo from '@c/ArticleInfo'
 import { HashRouter, Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -17,10 +18,11 @@ function App(props: any) {
   const routes = useMemo(() => {
     return [
       { path: '/index', cmp: Main },
-      { path: '/catagory', cmp: Catagory },
-      { path: '/tags', cmp: Tags },
+      { path: '/catagory/:id', cmp: Catagory },
+      { path: '/tags/:id', cmp: Tags },
       { path: '/write', cmp: Write },
-      { path: '/pic', cmp: Gallary }
+      { path: '/pic', cmp: Gallary },
+      { path: '/article/:id', cmp: ArticleInfo }
     ]
   }, [])
 

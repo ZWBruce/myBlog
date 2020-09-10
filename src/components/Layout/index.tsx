@@ -9,7 +9,7 @@ function Layout(props: any) {
   return <div className='app main-wrapp'>
     <div className="flex-left">
       <Card />
-      <CtgList />
+      <CtgList card={true} />
       <TagList />
     </div>
     <div className="flex-center">
