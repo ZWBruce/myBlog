@@ -78,6 +78,7 @@ function Write(props: any) {
   function uploadImg() {
     const imgDom = imgRef.current as unknown
     const images: any = (imgDom as HTMLInputElement).files
+    if(!images.length) return
     const fd = new FormData()
     fd.append('image', images[0])
     fd.append('msg', 'abcd')
@@ -198,7 +199,7 @@ function Write(props: any) {
       <Button type="primary" onClick={() => { addTag('category') }}>新增分类</Button>
     </div>
     <div className="flex">
-      <Input type="file" ref={imgRef} />
+      <input type="file" ref={imgRef} />
       <Button type="primary" onClick={uploadImg}>上传图片</Button>
     </div>
     <div className="flex">

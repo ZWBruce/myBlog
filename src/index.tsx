@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactComponentElement, ReactElement, ReactInstance, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -26,7 +26,7 @@ const globalData = {
   host,
   dayjs,
   showToast(msg: string) {
-    const cmp: any = Toast
+    const cmp: Partial<{ showToast: any } & typeof Toast> = Toast
     cmp.showToast(msg)
   },
   jump(props: any, id: number | string, type: string = 'article') {
