@@ -99,8 +99,9 @@ app.use(categoryRouter.routes())
 
 app.use(router.routes());
 
-app.use(stat(path.resolve(__dirname, 'static')));
-
+app.use(stat(path.resolve(__dirname, 'static')), {
+  maxage: 100000
+});
 
 // console.log('this is index js')
 

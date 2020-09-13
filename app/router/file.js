@@ -38,6 +38,7 @@ router.get('/download', ctx => {
 
         ctx.set('content-Type', 'application/octet-stream');
         ctx.set('content-Disposition', `attachment;filename=${f}`)
+        ctx.set("Cache-Control", "max-age=100000")
         // fs.createReadStream(filePath).pipe(ctx.body);
         ctx.body = fs.readFileSync(filePath)
         return
