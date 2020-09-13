@@ -69,7 +69,6 @@ function Write(props: any) {
 
   const ctxt = useGetCtxt()
   const id = useMemo(() => props.match.params.id, [props.match.params.id])
-  console.log('params', props.match.params)
   let info = useAxios(`${ctxt.host}/articles/${id}`, { content: '', title: '', time: 0, tags: [], category: {} })
 
   const [state, dispatch] = useReducer(reducer, initalSate)

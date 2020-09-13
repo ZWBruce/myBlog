@@ -5,12 +5,18 @@ import { useAxios } from '@/common/hooks'
 
 export default function Aricles(props: any) {
   const [url, setUrl] = useState<string>(props.url)
+
+  useEffect(() => {
+    setUrl(props.url)
+  }, [props.url])
+
+
   let { list, count } = useAxios(url, { list: [], count: 0 })
 
   function onChange(page: number) {
     setUrl((url: string) => `${url}?page=${page}`)
   }
-
+  
   return <>
     {
       list.map((t: any) => {

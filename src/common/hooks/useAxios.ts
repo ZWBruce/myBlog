@@ -1,9 +1,23 @@
-import { useState, useEffect } from 'react'
+/* eslint-disable */
+
+import { useState, useEffect, useReducer } from 'react'
 import axios from 'axios'
 
-export default function useAxios(url: string, initState: any = {}) {
-  const [info, setInfo] = useState(initState)
+function reducer(state: any, action: any) {
+  const { val } = action
+  switch (action.type) {
+    case 'changeInfo':
+      console.log('dispatch change info', val)
+      return { ...val }
+    default:
+      return state
+  }
+}
+
+export default function useAxios(url: string, initState: any = {}, fn:any = () => {}) {
+  const [info, dispatch] = useReducer(reducer, initState)
   useEffect(() => {
+    
     let cancel: any = null
     axios.get(url, {
       cancelToken: new axios.CancelToken(c => {
@@ -11,12 +25,17 @@ export default function useAxios(url: string, initState: any = {}) {
       })
     }).then((res: any) => {
       res = res.data
-      setInfo(res)
+      dispatch({
+        type: 'changeInfo',
+        val: res
+      })
+      fn({...res})
+      console.log('url changed res',url, res)
     })
     return () => {
       cancel()
     }
   }, [url])
-
+  console.log('url changed', info)
   return info
 }

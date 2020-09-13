@@ -7,8 +7,9 @@ import Articles from '@c/Articles'
 
 function Tags(props: any) {
   const id = useGetParam(props) || 0
+  
   const ctxt = useGetCtxt()
-  let { list, count } = useAxios(`${ctxt.host}/tags/articles/${id}`)
+  const { list } = useAxios(`${ctxt.host}/tags/articles/${id}`, {list: []})
   function jump(id = 0) {
     if (props.location.pathname === '/tags/' + id) return
 
@@ -16,11 +17,9 @@ function Tags(props: any) {
   }
 
   const curTag = useMemo(() => {
-    console.log({tagList: props.tagsList})
     let tag = props.tagsList.filter((t: any) => +t.id === +id)
     return tag[0]
   }, [id, props.tagsList])
-  console.log(curTag, props.tagsList)
 
   return <Layout>
     <div className="ctg-wrap card-bg">
