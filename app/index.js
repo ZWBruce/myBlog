@@ -71,7 +71,7 @@ router.post('/upload', (ctx) => {
 
 router.get('/update', (ctx) => {
   try {
-    process.exec('sudo cd /usr/local/myBlog && git fetch --all && git reset --hard origin/master && npm run go && pm2 restart all')
+    process.exec('sudo cd /usr/local/myBlog && git fetch --all && git reset --hard origin/master && npm run go')
     ctx.body = 'update success'
   } catch (e) {
     ctx.body = e

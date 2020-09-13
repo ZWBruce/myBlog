@@ -1,6 +1,24 @@
 .article-info-wrap {
   padding: 10.5px;
   min-height: 100vh;
+  word-break: break-word;
+  line-height: 1.75;
+  font-weight: 400;
+  font-size: 15px;
+  overflow-x: hidden;
+
+  ol,
+  ul {
+    padding-left: 28px;
+
+    li {
+      padding-left: 6px;
+    }
+  }
+
+  img {
+    max-width: 100%;
+  }
 
   h1 {
     margin: 20.1px 0;
@@ -15,9 +33,42 @@
     border-bottom: 1px solid #ececec;
   }
 
-  h3 {
+  h3,
+  h4 {
     font-size: 18px;
     padding-bottom: 0;
+    color: #333;
+    line-height: 1.5;
+    margin-top: 35px;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  pre {
+    position: relative;
+    line-height: 1.75;
+  }
+
+  code {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    color: #333;
+    background: #f8f8f8;
+    font-size: 14px;
+    // padding: .67rem 1.3rem;
+    margin: 0;
+    word-break: normal;
+    display: block;
+    padding: 18px 15px 12px;
+  }
+
+  p {
+    line-height: inherit;
+    margin-top: 22px;
+    margin-bottom: 22px;
   }
 
   &.card-bg {

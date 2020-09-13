@@ -1,10 +1,12 @@
-import React, { useState, useReducer, useEffect, useCallback, useRef, useContext } from 'react'
+import React, { useState, useReducer, useCallback, useRef, useContext, useMemo } from 'react'
 import { Button, Input, Select, Tag } from 'antd'
 import axios from 'axios'
 import './Write.less'
+import { useAxios, useGetCtxt } from '@/common/hooks'
 import MarkDown from 'react-markdown'
 import { context } from '@/context'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 const { Option } = Select
 
@@ -59,21 +61,25 @@ function reducer(state: any, action: Act) {
 
 function Write(props: any) {
 
-  const [state, dispatch] = useReducer(reducer, initalSate)
   const [tag, setTag] = useState('')
   const [ctg, setCtg] = useState('')
   const [img, setImg] = useState('')
   const data = useContext(context)
   const imgRef = useRef(null)
 
+  const ctxt = useGetCtxt()
+  const id = useMemo(() => props.match.params.id, [props.match.params.id])
+  console.log('params', props.match.params)
+  let info = useAxios(`${ctxt.host}/articles/${id}`, { content: '', title: '', time: 0, tags: [], category: {} })
+
+  const [state, dispatch] = useReducer(reducer, initalSate)
+  
   function change(e: any, type = 'changeTitle') {
     dispatch({
       type,
       val: e.target.value
     })
   }
-
-
 
   function uploadImg() {
     const imgDom = imgRef.current as unknown
@@ -120,18 +126,21 @@ function Write(props: any) {
   }
 
   function upload() {
-    if (!state.title || !state.content) {
+    console.log({info})
+    if ((!state.title || !state.content) && (!info.title || !info.content) ) {
 
       return
     }
-    const url = `${data.host}/articles/send`
+    
+    const url = info ? `${data.host}/articles/update/${id}` : `${data.host}/articles/send`
     const fd = new FormData()
-    fd.append('title', state.title)
-    fd.append('content', state.content)
-    const tagId = state.tags.map((t: any) => t.id)
+    fd.append('title', state.title || info.title)
+    fd.append('content', state.content || info.content)
+    let tags = state.tags.length ? state.tags : info.tags
+    const tagId = tags.map((t: any) => t.id)
     fd.append('tag_id', tagId.join())
-    fd.append('img', state.img)
-    fd.append('category', state.ctg.id)
+    fd.append('img', state.img || info.img)
+    fd.append('category', state.ctg.id || info.category.id)
     axios({
       url,
       method: 'post',
@@ -187,8 +196,8 @@ function Write(props: any) {
 
   return <div className="write-wrap">
     <div className="flex">
-      <Input value={state.title} onChange={(e) => change(e)} placeholder='文章标题' />
-      <Button type="primary" onClick={upload}>上传文章</Button>
+      <Input value={state.title || info.title} onChange={(e) => change(e)} placeholder='文章标题' />
+      <Button type="primary" onClick={upload}>{info ? '更新' : '上传'}文章</Button>
     </div>
     <div className="flex">
       <Input type="text" value={tag} onChange={(e) => { setTag(e.target.value) }} />
@@ -211,7 +220,7 @@ function Write(props: any) {
         })
       }}>使用已有图片</Button>
     </div>
-    <img src={state.img} alt="封面图片" style={{ height: state.img ? '100px' : '0px', width: 'auto', visibility: state.img ? 'visible' : 'hidden', display: 'block' }} />
+    <img src={state.img || info.img} alt="封面图片" style={{ height: state.img || info.img ? '100px' : '0px', width: 'auto', visibility: state.img || info.img ? 'visible' : 'hidden', display: 'block' }} />
     <Select
       showSearch
       style={{ width: 200 }}
@@ -253,16 +262,16 @@ function Write(props: any) {
     {
       state.ctg.name ?
         <Tag color="#2db7f5" closable onClose={() => { closeCtg() }}>
-          {state.ctg.name}
+          {state.ctg.name || (info.category && info.category.category_name)}
         </Tag> : ''
     }
     <br />
     <div className="flex content">
       <div className="inner-content">
-        <TextArea value={state.content} onChange={(e) => change(e, 'changeContent')} placeholder='文章内容' />
+        <TextArea value={state.content || info.content} onChange={(e) => change(e, 'changeContent')} placeholder='文章内容' />
       </div>
       <div className="inner-content">
-        <MarkDown source={state.content} />
+        <MarkDown source={state.content || info.content} />
       </div>
     </div>
 
@@ -276,4 +285,4 @@ export default connect(state => ({ ...state }), {
   add_ctg(val: any) {
     return { type: 'ADD_CTG', val }
   }
-})(Write)
+})(withRouter(Write))

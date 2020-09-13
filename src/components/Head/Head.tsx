@@ -20,7 +20,7 @@ export default function (props: { children: ReactChild }) {
   if (process.env.NODE_ENV === 'development') {
     links.push({
       text: '写文章',
-      url: '/write'
+      url: '/write/0'
     }, {
       text: '图库',
       url: '/pic'

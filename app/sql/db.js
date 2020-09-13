@@ -6,7 +6,7 @@ const process = require('shelljs')
 let host = '39.96.31.138'
 let pwd = 'wzx123'
 
-if (process.env.NODE_ENV === 'development') {
+if (false && process.env.NODE_ENV === 'development') {
   host = 'localhost'
   pwd = 'root'
 }

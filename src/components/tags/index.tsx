@@ -16,6 +16,7 @@ function Tags(props: any) {
   }
 
   const curTag = useMemo(() => {
+    console.log({tagList: props.tagsList})
     let tag = props.tagsList.filter((t: any) => +t.id === +id)
     return tag[0]
   }, [id, props.tagsList])
@@ -37,7 +38,7 @@ function Tags(props: any) {
                   key={t.id} onClick={() => { jump(t.id) }}
                 >
                   <span>{t.tag_name}</span>
-                  <span>{t.tag_name.length}</span>
+                  <span>{t.articles.length}</span>
                 </li>)
               }
             </ul>

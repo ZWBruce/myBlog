@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import './index.less'
 import { context } from '@/context'
 import Layout from '@c/Layout'
@@ -10,7 +10,7 @@ function ArticleInfo(props: any) {
   const ctxt = useContext(context)
 
   const id = useMemo(() => props.match.params.id, [props.match.params.id])
-  const info = useAxios(`${ctxt.host}/articles/${id}`, { content: '', title: '', time: 0 })
+  const info = useAxios(`${ctxt.host}/articles/${id}`, { content: '', title: '', time: 0, tags: [], category: {} })
 
   const showTitle = useMemo(() => {
     let { content } = info

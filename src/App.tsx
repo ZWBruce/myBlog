@@ -20,7 +20,7 @@ function App(props: any) {
       { path: '/index', cmp: Main },
       { path: '/catagory/:id', cmp: Catagory },
       { path: '/tags/:id', cmp: Tags },
-      { path: '/write', cmp: Write },
+      { path: '/write/:id', cmp: Write },
       { path: '/pic', cmp: Gallary },
       { path: '/article/:id', cmp: ArticleInfo }
     ]
@@ -42,7 +42,9 @@ function App(props: any) {
         {
           routes.map((t: any, ind: number) => <Route path={t.path} component={t.cmp} key={ind} />)
         }
+        <Redirect exact from='/write' to='/write/0' />
         <Redirect exact from='/' to='/index' />
+        
       </div>
     </HashRouter>
   );
