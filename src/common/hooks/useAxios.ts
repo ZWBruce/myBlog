@@ -7,7 +7,6 @@ function reducer(state: any, action: any) {
   const { val } = action
   switch (action.type) {
     case 'changeInfo':
-      console.log('dispatch change info', val)
       return { ...val }
     default:
       return state
@@ -30,12 +29,10 @@ export default function useAxios(url: string, initState: any = {}, fn:any = () =
         val: res
       })
       fn({...res})
-      console.log('url changed res',url, res)
     })
     return () => {
       cancel()
     }
   }, [url])
-  console.log('url changed', info)
   return info
 }

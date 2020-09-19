@@ -6,6 +6,9 @@ const fs = require('fs')
 const cors = require('koa2-cors');
 const body = require('koa-body')
 const process = require('shelljs')
+const send = require('koa-send')
+const got = require('got')
+
 const {
   fileRouter,
   articleRouter,
@@ -59,7 +62,6 @@ router.get('/', (ctx) => {
 });
 
 router.post('/upload', (ctx) => {
-  console.log('body', ctx.request.body)
   // ctx.set('Access-Control-Allow-Origin', '*');
   const name = ctx.request.files.image.name
   ctx.body = {
@@ -67,6 +69,22 @@ router.post('/upload', (ctx) => {
     data: '/files/download?name=' + name,
   }
 
+})
+
+router.get('/getimg', async (ctx) => {
+  const {
+    img
+  } = ctx.query
+
+  let data = await got(img, {
+    responseType: 'buffer',
+    // resolveBodyOnly: true
+  })
+  // let data = 'data:image/jpeg;base64,' + Buffer.from(body).toString('base64')
+  let imgData = data.body.toString('base64')
+
+  const type = data.headers['content-type']
+  ctx.body = `<img src="data:${type};base64,${imgData}" />`
 })
 
 router.get('/update', (ctx) => {

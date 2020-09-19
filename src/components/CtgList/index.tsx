@@ -22,7 +22,6 @@ function CtgList(props: any) {
   }, [props.location.pathname])
 
   function jump(id: number = 0) {
-    console.log('jump', '/catagory/' + id, props.location.pathname)
     if (props.location.pathname !== '/catagory/' + id) {
       props.history.push('/catagory/' + id)
     }
@@ -32,7 +31,7 @@ function CtgList(props: any) {
     const cur = list.filter((t: any) => +t.id === +id)
     return cur[0] || {}
   }, [id, list])
-  console.log(props.card, curCategory, props.card || curCategory)
+  
   return <div className="ctg-wrap card-bg">
     {
       props.card || !curCategory.category_name ?

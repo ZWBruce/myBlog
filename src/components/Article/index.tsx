@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useCallback } from 'react'
 import { context } from '@/context'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
+import dayjs from 'dayjs'
 import './index.less'
 
 function Article(props: any) {
@@ -26,11 +27,16 @@ function Article(props: any) {
     [data.host, props.info.id],
   )
 
+  const format = useCallback((n: string | number) => {
+    n = +n
+    return dayjs(n).format('YYYY-MM-DD HH:mm')
+  }, [])
+
   return <div className="article-wrap card-bg">
     <img src={img} alt="" />
     <div className="content-wrap">
       <div className="notice mb-7">
-        <span>1天前</span>
+        <span>{format(props.info.time)}</span>
         <span onClick={() => { data.jump(props, cata && cata.id, 'catagory') }} className="link">{cata && cata.category_name}</span>
         {
           isDev ? 

@@ -42,7 +42,7 @@ function reducer(state = initalState, action: Act) {
       }
     case 'ADD_TAG':
       tagsList.push(val)
-      console.log({ tagsList })
+      
       return {
         ...state,
         tagsList: [...tagsList]
@@ -55,7 +55,7 @@ function reducer(state = initalState, action: Act) {
       }
     case 'ADD_CTG':
       ctgList.push(val)
-      console.log({ ctgList })
+      
       return {
         ...state,
         ctgList: [...ctgList]

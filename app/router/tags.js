@@ -30,7 +30,7 @@ router.get('/list', async (ctx) => {
 
 router.post('/add', async (ctx) => {
   ctx.set('Access-Control-Allow-Origin', '*')
-  console.log(ctx.request.body)
+
   const {
     name
   } = ctx.request.body

@@ -94,7 +94,6 @@ function Write(props: any) {
         data: fd
       }
     ).then(res => {
-      console.log(res)
       const url = data.host + res.data.data
       dispatch({
         type: 'CHANGE_IMG',
@@ -114,7 +113,6 @@ function Write(props: any) {
       method: 'post',
       data: fd
     }).then(({ data }) => {
-      console.log(data)
       if (type === 'tags') {
         props.add_tag(data)
       }
@@ -125,7 +123,6 @@ function Write(props: any) {
   }
 
   function upload() {
-    console.log({info})
     if ((!state.title || !state.content) && (!info.title || !info.content) ) {
 
       return
@@ -185,13 +182,13 @@ function Write(props: any) {
     })
   }
 
-  const onBlur = useCallback(() => {
-    console.log('blur')
-  }, [])
+  // const onBlur = useCallback(() => {
+  //   console.log('blur')
+  // }, [])
 
-  const onSearch = useCallback((val) => {
-    console.log('search', val)
-  }, [])
+  // const onSearch = useCallback((val) => {
+  //   console.log('search', val)
+  // }, [])
 
   return <div className="write-wrap">
     <div className="flex">
@@ -226,8 +223,6 @@ function Write(props: any) {
       placeholder="Select a tag"
       optionFilterProp="children"
       onChange={onChange}
-      onBlur={onBlur}
-      onSearch={onSearch}
       filterOption={(input, option) =>
         (option as any).children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
@@ -248,8 +243,6 @@ function Write(props: any) {
       placeholder="Select a 分类"
       optionFilterProp="children"
       onChange={onChange1}
-      onBlur={onBlur}
-      onSearch={onSearch}
       filterOption={(input, option) =>
         (option as any).children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }

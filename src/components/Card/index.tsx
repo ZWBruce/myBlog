@@ -3,14 +3,9 @@ import { context } from '@/context'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import './index.less'
-import dayjs from 'dayjs'
 
 function Card(props: any) {
   const data: any = useContext(context)
-  let x = dayjs()
-  let y = dayjs(1598195948672)
-
-  console.log('dayjs', dayjs.duration(x.diff(y)))
 
   return <div className="card-content card-bg">
     <img src={`${data.host}/files/download?name=1.jpg`} alt="" />

@@ -12,7 +12,7 @@ router.use(cors())
 
 router.post('/send', async (ctx) => {
   ctx.set('Access-Control-Allow-Origin', '*')
-  console.log(ctx.request.body)
+
   const {
     article_id,
     tag_id
