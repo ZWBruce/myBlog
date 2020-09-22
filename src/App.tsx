@@ -6,7 +6,7 @@ import Tags from '@c/tags/index'
 import Write from '@c/write/Write'
 import Gallary from '@c/gallary'
 import ArticleInfo from '@c/ArticleInfo'
-import { HashRouter, Route, Redirect } from 'react-router-dom'
+import { HashRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { context } from '@/context'
@@ -39,12 +39,13 @@ function App(props: any) {
         <span></span>
       </Head>
       <div className='app'>
+      <Switch>
         {
           routes.map((t: any, ind: number) => <Route path={t.path} component={t.cmp} key={ind} />)
         }
         <Redirect exact from='/write' to='/write/0' />
         <Redirect exact from='/' to='/index' />
-        
+        </Switch>
       </div>
     </HashRouter>
   );
