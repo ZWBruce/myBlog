@@ -121,14 +121,16 @@ function Write(props: any) {
       }
     })
   }
-
+  
   function upload() {
     if ((!state.title || !state.content) && (!info.title || !info.content) ) {
 
       return
     }
     
-    const url = info ? `${data.host}/articles/update/${id}` : `${data.host}/articles/send`
+    const url = Object.keys(info).length ? `${data.host}/articles/update/${id}` : `${data.host}/articles/send`
+    console.log(url)
+    // return
     const fd = new FormData()
     fd.append('title', state.title || info.title)
     fd.append('content', state.content || info.content)

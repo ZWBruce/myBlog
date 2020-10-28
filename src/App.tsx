@@ -13,6 +13,8 @@ import { context } from '@/context'
 import './App.less';
 import '@/Main.less'
 
+console.log('Tags', Tags)
+
 function App(props: any) {
   const ctxt = useContext(context)
   const routes = useMemo(() => {

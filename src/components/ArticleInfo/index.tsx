@@ -13,7 +13,7 @@ function ArticleInfo(props: any) {
   const info = useAxios(`${ctxt.host}/articles/${id}`, { content: '', title: '', time: 0, tags: [], category: {} })
 
   const showTitle = useMemo(() => {
-    let { content } = info
+    let { content = '' } = info
     return !content.trim().match(/^#\s/)
   }, [info])
 
