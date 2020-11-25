@@ -107,6 +107,10 @@ router.post('/webhooks', (ctx) => {
     origin = ctx.origin
 
   fs.writeFileSync(basePath, content + '\r\n' + new Date().toString() + JSON.stringify(params) + JSON.stringify(origin))
+
+  ctx.body = {
+    msg: 'success'
+  }
 })
 
 // router.post('/articles')
