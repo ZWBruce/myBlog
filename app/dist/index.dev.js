@@ -56,7 +56,7 @@ router.get('/', function(ctx) {
     var file = fs.readFileSync(p);
     ctx.body = file;
   } catch (_unused) {
-    ctx.body = '<h1>404 Not Found</h1>';
+    ctx.body = '<h1>404 Not Found!</h1>';
   }
 });
 router.post('/upload', function(ctx) {
