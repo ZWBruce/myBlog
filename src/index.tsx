@@ -14,7 +14,7 @@ import store from '@/common/global/store'
 
 dayjs.extend(duration)
 
-dayjs.extend(isLeapYear) // 使用插件
+dayjs.extend(isLeapYear) // 使用插件1
 dayjs.locale('zh-cn') // 使用本地化语言
 
 const con = document.createElement('div')
