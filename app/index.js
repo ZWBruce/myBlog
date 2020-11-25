@@ -97,6 +97,7 @@ router.get('/update', (ctx) => {
 })
 
 router.post('/webhooks', (ctx) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
   const basePath = '/usr/local/logs/webhooks.txt'
   if (!fs.existsSync(basePath)) {
     fs.writeFileSync(basePath, '')
