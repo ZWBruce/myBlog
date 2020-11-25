@@ -96,6 +96,18 @@ router.get('/update', (ctx) => {
   }
 })
 
+router.post('/webhooks', (ctx) => {
+  const basePath = '/usr/local/logs/webhooks.txt'
+  if (!fs.existsSync(basePath)) {
+    fs.writeFileSync(basePath, '')
+  }
+  let content = fs.readFileSync(basePath)
+  let params = ctx.params,
+    origin = ctx.origin
+
+  fs.writeFileSync(basePath, content + '\r\n' + JSON.stringify(params) + JSON.stringify(origin))
+})
+
 // router.post('/articles')
 
 // console.log(fileRouter)
